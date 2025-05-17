@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twist and Timber</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="nav-group nav-left">
+      <a href="index.html">Home</a>
+      <a href="custom.html">Custom Build</a>
+    </div>
+
+    <div class="logo">
+      <img src="img/logo.png" alt="Twist and Timber" />
+    </div>
+
+    <div class="nav-group nav-right">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to Twist and Timber</h1>
+  </section>
+
+  <!-- Inventory Section -->
+  <main class="container">
+    <h2>Our Current Inventory</h2>
+    <div class="gallery" id="inventory">
+      <!-- JS will load items here -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-contact">
+      <a href="https://www.instagram.com/" target="_blank">
+        <img src="img/instagram.png" alt="Instagram" />
+      </a>
+      <a href="https://www.facebook.com/" target="_blank">
+        <img src="img/facebook.png" alt="Facebook" />
+      </a>
+      <span class="email">contact@twistandtimber.com</span>
+    </div>
+    <p>&copy; 2025 Twist and Timber</p>
+  </footer>
+
+  <!-- Inventory Script -->
+  <script>
+    fetch('inventory.json')
+      .then(response => response.json())
+      .then(data => {
+        const gallery = document.getElementById('inventory');
+        data.forEach(item => {
+          if (item.name && item.image) {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.innerHTML = `
+              <img src="${item.image}" alt="${item.name}">
+              <p>${item.name}</p>
+            `;
+            gallery.appendChild(div);
+          } else {
+            console.error('Item missing name or image:', item);
+          }
+        });
+      })
+      .catch(err => console.error('Failed to load inventory:', err));
+  </script>
+
+</body>
+</html>
